@@ -9,8 +9,8 @@ def run():
 				ArticleId_id,WordCount,StdFrequency,Source) select arng.ArticleNgramId,arng.NgramId_id,
 				arng.Frequency,arng.ArticleId_id,article.WordCount,
 				round((arng.Frequency/article.WordCount),2), article.Source 
-				from nlp.politicsApp_articlengram as arng, 
-				nlp.politicsApp_articles as article where article.ArticleId=arng.ArticleId_id 
+				from nlp2.politicsApp_articlengram as arng, 
+				nlp2.politicsApp_articles as article where article.ArticleId=arng.ArticleId_id 
 				order by arng.ArticleNgramId asc"""
 		cur.execute(stmt)
 		connection.commit()

@@ -3,26 +3,26 @@ select * from nlp2.politicsApp_articles
 select count(*) from nlp2.politicsApp_articles
 select * from nlp2.politicsApp_ngram
 select count(*) from nlp2.politicsApp_ngram
-select * from nlp.politicsApp_articlengram
+select * from nlp2.politicsApp_articlengram
 select count(*) from nlp2.politicsApp_articlengram
-select * from nlp.politicsApp_interaction
-select count(*) from nlp.politicsApp_interaction
-select * from nlp.politicsApp_nndata
-select count(*) from nlp.politicsApp_nndata
+select * from nlp2.politicsApp_interaction
+select count(*) from nlp2.politicsApp_interaction
+select * from nlp2.politicsApp_nndata
+select count(*) from nlp2.politicsApp_nndata
 
 
-select count(*) from nlp.politicsApp_articlengram where Frequency=1
-select count(*) from nlp.politicsApp_articlengram where Frequency=2
-select count(*) from nlp.politicsApp_articlengram where Frequency=4
-select count(*) from nlp.politicsApp_articlengram where Frequency=6
-select count(*) from nlp.politicsApp_articlengram where Frequency=8
-select count(*) from nlp.politicsApp_articlengram where Frequency=10
-select count(*) from nlp.politicsApp_articlengram where Frequency=14
-select count(*) from nlp.politicsApp_articlengram where Frequency=18
-select count(*) from nlp.politicsApp_articlengram where Frequency=22
-select count(*) from nlp.politicsApp_articlengram where Frequency=30
-select count(*) from nlp.politicsApp_articlengram where Frequency=40
-select count(*) from nlp.politicsApp_articlengram where Frequency=55
+select count(*) from nlp2.politicsApp_articlengram where Frequency=1
+select count(*) from nlp2.politicsApp_articlengram where Frequency=2
+select count(*) from nlp2.politicsApp_articlengram where Frequency=4
+select count(*) from nlp2.politicsApp_articlengram where Frequency=6
+select count(*) from nlp2.politicsApp_articlengram where Frequency=8
+select count(*) from nlp2.politicsApp_articlengram where Frequency=10
+select count(*) from nlp2.politicsApp_articlengram where Frequency=14
+select count(*) from nlp2.politicsApp_articlengram where Frequency=18
+select count(*) from nlp2.politicsApp_articlengram where Frequency=22
+select count(*) from nlp2.politicsApp_articlengram where Frequency=30
+select count(*) from nlp2.politicsApp_articlengram where Frequency=40
+select count(*) from nlp2.politicsApp_articlengram where Frequency=55
 
 
 
@@ -40,11 +40,11 @@ drop table nlp.`nlp.politicsApp_nndata`
 
 
 # Delete all rows from table
+truncate table nlp2.politicsApp_articles
+truncate table nlp2.politicsApp_articlengram
+truncate table nlp2.politicsApp_interaction
 
-truncate table nlp.politicsApp_articlengram
-truncate table nlp.politicsApp_interaction
-
-SET FOREIGN_KEY_CHECKS = 0; 
+SET FOREIGN_KEY_CHECKS = 0
 truncate table nlp.politicsApp_articles
 truncate table nlp.politicsApp_ngram
 SET FOREIGN_KEY_CHECKS = 1;

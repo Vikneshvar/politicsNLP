@@ -1,13 +1,13 @@
 from politicsApp.models import Ngram, Articles, ArticleNgram
 import MySQLdb,re
 from django.db import connection
+from multiprocessing import Process
 
 def run():
 
 	articles = Articles.objects.all()
-	ngrams = Ngram.objects.all()
+	ngrams = Ngram.objects.all()[0:10000]
 	list_articleNgram = []
-
 	for ngram in ngrams:
 		gram = ngram.Ngram
 		ngramId = ngram.NgramId
@@ -39,16 +39,17 @@ def run():
 	#	db = MySQLdb.connect(host="localhost", user="root", db="nlp")  
 	#	cur = db.cursor()
 		cur = connection.cursor()
-		stmt= """INSERT INTO nlp2.politicsApp_articlengram (NgramId_id, ArticleId_id,Frequency,StdFrequency) values (%(NgramId)s,%(ArticleId)s,%(Frequency)s,%(StdFrequency)s)"""
+		stmt= """INSERT INTO nlp2.politicsApp_articlengram (NgramId_id, ArticleId_id,Frequency,StdFrequency) 
+					values (%(NgramId)s,%(ArticleId)s,%(Frequency)s,%(StdFrequency)s)"""
 		cur.executemany(stmt, list_articleNgram)
 		connection.commit()
-		print("affected_count", affected_count)
 		print("affected rows {}".format(cur.rowcount))
 	#	db.commit()
 	except MySQLdb.IntegrityError:
 		print("failed to insert values")
 	finally:
-		cur.close() 		
+		cur.close()
+
 
 
 

@@ -18,7 +18,7 @@ def run():
 					f = open(os.path.join(sourcedir,textFile),"r",encoding='utf-8', errors='ignore')
 					rawText = f.read()
 					article = Articles(Source=sourceName, RawText=rawText)
-				#	article.save()
+					article.save()
 
 				
 

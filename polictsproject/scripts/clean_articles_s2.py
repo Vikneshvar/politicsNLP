@@ -10,6 +10,7 @@ def run():
 #	articles = Articles.objects.raw("select * from politicsApp_articles;")
 	articles = Articles.objects.all()
 	for article in articles:
+		print('Raw String: ', article.RawText)
 		dict_output = textClean(article.RawText)
 		processedText=dict_output.get('string')
 		wordCount=dict_output.get('count')
@@ -24,23 +25,60 @@ def textClean(rawText):
 def regExp(text):
 	newString = ''
 	for ch in text:
-		if ch.isalpha() == True or ch == ',' or ch == '.' or ch == ' ' or ch == ';':
+		if ch.isalpha() == True or ch == ',' or ch == '.' or ch == ' ' or ch == ';' or ch == '-' or ch == '"':
 			newString+= ch
 		else:
 			pass
 
-	newString = newString.replace('\n','')
+
 	newString = newString.replace(',','.')
-	print("newString:",newString)
+	newString = newString.replace('-','')
+	newString = newString.replace('"','')
+	newString = newString.replace(';','.')
+
+	print(" \n String:",newString)
 	print("\n")
-	newString = newString.replace('. ','.')
-	newString = newString.replace(' .','.')
-#	print("newString:",newString)
-#	print("\n")
+
+	# Replace multiple space by single space
+	newString = re.sub(r'\s+',' ',newString)
+	# Replace multiple periods by single period 
+	newString = re.sub(r'\.+','.',newString)
+	newString = re.sub(r'\.+\s+\.+','.',newString)
+
+
+	print(" \n newString:",newString)
+	print("\n")
 	
-#	regex = re.compile(r'\b[A-Z]{1}\b')
-#	result = regex.search(newString)
-#	print("result: ",result)
+	# abbrevation
+	newString = re.sub(r'([A-Z]+\.)\s+([a-zA-Z]+)',r'\1\2',newString)
+
+	# 2 to 5 letter abbrevation
+	newString = re.sub(r'([A-Z])(\.)([A-Z])(\.)([a-zA-Z]+)',r'\1\3',newString)
+	newString = re.sub(r'([A-Z])(\.)([A-Z])(\.)([A-Z])(\.)([a-zA-Z]+)',r'\1\3\5',newString)
+	newString = re.sub(r'([A-Z])(\.)([A-Z])(\.)([A-Z])(\.)([a-zA-Z]+)',r'\1\3\5\7',newString)
+	newString = re.sub(r'([A-Z])(\.)([A-Z])(\.)([A-Z])(\.)([A-Z])(\.)([a-zA-Z]+)',r'\1\3\5\7\9',newString)
+
+
+	# Remove space before a new sentence starts
+	# example: President Trump. says the United States
+	# Run 2 times to remove properly, else some places are missed
+	newString = re.sub(r'([a-z]+\.)\s+([a-zA-Z]+)',r'\1\2',newString)
+	newString = re.sub(r'([a-z]+\.)\s+([a-zA-Z]+)',r'\1\2',newString)
+
+	# Remove space at the end of sentence
+	# example: big prizes.but the .year.old
+	# Run 2 times to remove properly, else some places are missed
+	newString = re.sub(r'([a-z]+)\s+(\.+[a-zA-Z]+)',r'\1\2',newString)
+	newString = re.sub(r'([a-z]+)\s+(\.+[a-zA-Z]+)',r'\1\2',newString)
+
+	# Remove space before and after a sentence
+	# example: ahead of Game . I dont
+	newString = re.sub(r'([a-z]+)\s+(\.)\s+([a-zA-Z]+)',r'\1\2\3',newString)
+
+	print("newString2222: ",newString)
+	print("\n")
+
+
 
 	finalString = ''
 	wordCount = 0
@@ -74,8 +112,27 @@ def regExp(text):
 				wordCount+=1
 		finalString+='.'
 	
-	finalString = finalString.replace('..','.')
-	finalString = finalString.replace('  ',' ')
+	finalString = re.sub(r'\.+','.',finalString)
+
+
+	# Remove space before a new sentence starts
+	# example: President Trump. says the United States
+	# Run 2 times to remove properly, else some places are missed
+	finalString = re.sub(r'([a-z]+\.)\s+([a-zA-Z]+)',r'\1\2',finalString)
+	finalString = re.sub(r'([a-z]+\.)\s+([a-zA-Z]+)',r'\1\2',finalString)
+
+	# Remove space at the end of sentence
+	# example: big prizes.but the .year.old
+	# Run 2 times to remove properly, else some places are missed
+	finalString = re.sub(r'([a-z]+)\s+(\.+[a-zA-Z]+)',r'\1\2',finalString)
+	finalString = re.sub(r'([a-z]+)\s+(\.+[a-zA-Z]+)',r'\1\2',finalString)
+
+	# Remove space before and after a sentence
+	# example: ahead of Game . I dont
+	finalString = re.sub(r'([a-z]+)\s+(\.)\s+([a-zA-Z]+)',r'\1\2\3',finalString)
+
+
+
 
 	print("finalString:",finalString)
 	print("\n")
