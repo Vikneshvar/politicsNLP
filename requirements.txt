@@ -1,5 +1,5 @@
 configparser==3.5.0
-Django==1.11.15
+Django==1.11.19
 django-extensions==1.9.7
 -e git://github.com/theatlantic/django-mysqlndb-backend.git@15403abcf18f264a1945b4f2fb684d15e0fdc82c#egg=django_mysqlndb_backend
 django-transaction-hooks==0.2
